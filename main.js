@@ -42,7 +42,7 @@ function resetPage($inpage, inClass) {
         $inpage.classList.remove(Class);
     });
 
-    if (!$inpage.classList.contains("page-current")) {
+    if (showMenu && !$inpage.classList.contains("page-current")) {
         $inpage.classList.add("page-current")
     }
 }
