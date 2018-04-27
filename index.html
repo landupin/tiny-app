@@ -42,56 +42,6 @@
             /* other texts */
             --main-text-primary-light-on-light: rgba(255, 255, 255, 0.87);
         }
-
-        .nav-item a::before,
-        .nav-item a::after {
-            position: absolute;
-            top: 0;
-            content: "";
-            width: 0px;
-            height: 5px;
-            transition: all 200ms ease-in-out;
-            opacity: 0;
-
-            background-color: var(--main-secondary);
-        }
-
-        .nav-item a:hover::before,
-        .nav-item a:hover::after {
-            width: 4rem;
-            opacity: 1;
-        }
-
-        .nav-item a::before {
-            left: calc(50%);
-        }
-
-        .nav-item a::after {
-            right: calc(50%);
-        }
-/*
-        .nav-item a div {
-            transition: bottom 150ms ease-in;
-        }
-
-        .nav-item a:hover div {
-            bottom: 2.75rem;
-        }
-
-        .nav-item a div span {
-            transition: font-size 150ms ease-in;
-        }
-
-        .nav-item a:hover div span {
-            font-size: 1.75rem;
-        }
-
-        /**/
-        article.page {
-            user-select: none;
-            -moz-user-select: none;
-            -webkit-user-select: none;
-        }
     </style>
 
     <body>
@@ -198,27 +148,29 @@
             </nav>
         </div>
 
-        <button aria-label="next" class="page-ontop">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
-        </button>
-        <button aria-label="previous" class="page-ontop">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left">
-                <line x1="19" y1="12" x2="5" y2="12"></line>
-                <polyline points="12 19 5 12 12 5"></polyline>
-            </svg>
-        </button>
-        <button aria-label="menu" class="page-ontop">
-            <svg fill="currentColor" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"
-                />
-                <path d="M0 0h24v24H0z" fill="none" />
-            </svg>
-        </button>
+        <div role="menu">
+            <button aria-label="next" class="page-ontop">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </button>
+            <button aria-label="previous" class="page-ontop">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+            </button>
+            <button aria-label="menu" class="page-ontop">
+                <svg fill="currentColor" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"
+                    />
+                    <path d="M0 0h24v24H0z" fill="none" />
+                </svg>
+            </button>
+        </div>
     </body>
 
     <script src="getAnimation.js"></script>

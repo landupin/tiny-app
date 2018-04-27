@@ -48,10 +48,20 @@ body {
     z-index: 999;
 }
 
-button {
-    position: absolute;
-    bottom: 0;
+article.page {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
 
+    color: whitesmoke;
+    font-size: 6rem;
+    font-weight: 200;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button {
     cursor: pointer;
     color: var(--main-button-color);
     height: 4em;
@@ -71,6 +81,19 @@ button::-moz-focus-inner {
     padding: 0;
 }
 
+/* BOTTOM MENU */
+div[role="menu"]{
+    height: 4em;
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+    font-size: 13.3333px;
+}
+
+div[role="menu"] button {
+    position: absolute;
+}
+
 [aria-label="previos"] {
     left: 0;
 }
@@ -86,6 +109,7 @@ button::-moz-focus-inner {
     margin-right: auto;
 }
 
+/* NAVIGATION PAGE */
 nav.page {
     background-color: var(--main-primary-light);
     z-index: 2;
@@ -169,10 +193,6 @@ button.button-close svg {
 
 .nav-item > a > div {
     bottom: 2.75rem;
-    /*width: -moz-fit-content;*/
-    /* width: -webkit-fit-content; */
-    /*height: -moz-fit-content;*/
-    /*height:;*/
     color: var(--main-text-primary-light-on-light);
 }
 
@@ -188,6 +208,34 @@ nav svg {
     height: 100%;
 }
 
+/* link hover */
+.nav-item a::before,
+.nav-item a::after {
+    position: absolute;
+    top: 0;
+    content: "";
+    width: 0px;
+    height: 5px;
+    transition: all 200ms ease-in-out;
+    opacity: 0;
+    background-color: var(--main-secondary);
+}
+
+.nav-item a:hover::before,
+.nav-item a:hover::after {
+    width: 4rem;
+    opacity: 1;
+}
+
+.nav-item a::before {
+    left: calc(50%);
+}
+
+.nav-item a::after {
+    right: calc(50%);
+}
+
+/* grid sprecification */
 #to-p1 {
     grid-area: one;
 }
@@ -212,18 +260,7 @@ nav svg {
     grid-area: six;
 }
 
-
 /* background for slides*/
-article.page {
-    color: whitesmoke;
-    font-size: 4em;
-
-    padding-bottom: 4rem;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 #p1 {
     background-color: coral;
 }
