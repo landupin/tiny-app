@@ -26,19 +26,19 @@
             --main-button-light-on-light-color: rgba(255, 255, 255, 1);
 
             /* normal text - dark on light */
-            --main-text-primary-on-light: rgba(0,0,0,o.87);
-            --main-text-secondary-on-light: rgba(0,0,0,0.54);
-            --main-text-disabled-on-light: rgba(0,0,0,0.38);
-            --main-text-hint-on-light: rgba(0,0,0,0.38);
-            --main-text-divider-on-light: rgba(0,0,0,0.12);
-            
+            --main-text-primary-on-light: rgba(0, 0, 0, o.87);
+            --main-text-secondary-on-light: rgba(0, 0, 0, 0.54);
+            --main-text-disabled-on-light: rgba(0, 0, 0, 0.38);
+            --main-text-hint-on-light: rgba(0, 0, 0, 0.38);
+            --main-text-divider-on-light: rgba(0, 0, 0, 0.12);
+
             /* normal text - light on dark */
-            --main-text-disabled-on-light: rgba(0,0,0,1);            
-            --main-text-disabled-on-light: rgba(0,0,0,0.70);            
-            --main-text-disabled-on-light: rgba(0,0,0,0.50);            
-            --main-text-disabled-on-light: rgba(0,0,0,0.50);            
-            --main-text-disabled-on-light: rgba(0,0,0,0.12);                        
-                                                
+            --main-text-disabled-on-light: rgba(0, 0, 0, 1);
+            --main-text-disabled-on-light: rgba(0, 0, 0, 0.70);
+            --main-text-disabled-on-light: rgba(0, 0, 0, 0.50);
+            --main-text-disabled-on-light: rgba(0, 0, 0, 0.50);
+            --main-text-disabled-on-light: rgba(0, 0, 0, 0.12);
+
             /* other texts */
             --main-text-primary-light-on-light: rgba(255, 255, 255, 0.87);
         }
@@ -69,21 +69,59 @@
         .nav-item a::after {
             right: calc(50%);
         }
+/*
+        .nav-item a div {
+            transition: bottom 150ms ease-in;
+        }
 
-        ['aria-current="true"'] {
-            overflow-y: scroll;
+        .nav-item a:hover div {
+            bottom: 2.75rem;
+        }
+
+        .nav-item a div span {
+            transition: font-size 150ms ease-in;
+        }
+
+        .nav-item a:hover div span {
+            font-size: 1.75rem;
+        }
+
+        /**/
+        article.page {
+            user-select: none;
+            -moz-user-select: none;
+            -webkit-user-select: none;
         }
     </style>
 
     <body>
         <div class="perspective">
-            <article id="p1" class="page page-current" aria-current="true">1</article>
-            <article id="p2" class="page">2</article>
-            <article id="p3" class="page">3</article>
-            <article id="p4" class="page">4</article>
-            <article id="p5" class="page">5</article>
-            <article id="p6" class="page">6</article>
-            <nav aria-hidden="true" class="page">
+            <article id="p1" class="page page-onscreen page-current">
+                <span class="page-inner">1</span>
+            </article>
+            <article id="p2" class="page">
+                <span class="page-inner">2</span>
+            </article>
+            <article id="p3" class="page">
+                <span class="page-inner">3</span>
+            </article>
+            <article id="p4" class="page">
+                <span class="page-inner">4</span>
+            </article>
+            <article id="p5" class="page">
+                <span class="page-inner">5</span>
+            </article>
+            <article id="p6" class="page">
+                <span class="page-inner">6</span>
+            </article>
+            <nav class="page">
+
+                <button class="button-close" aria-label="close-menu">
+                    <svg fill="currentColor" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+                        <path d="M0 0h24v24H0z" fill="none" />
+                    </svg>
+                </button>
                 <div class="nav-wrapper">
                     <div id="to-p1" class="nav-item">
                         <a href="#">
@@ -92,7 +130,9 @@
                                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 14.5c-2.49 0-4.5-2.01-4.5-4.5S9.51 7.5 12 7.5s4.5 2.01 4.5 4.5-2.01 4.5-4.5 4.5zm0-5.5c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"
                                 />
                             </svg>
-                            <span>Vinyl</span>
+                            <div>
+                                <span>Vinyl</span>
+                            </div>
                         </a>
                     </div>
                     <div id="to-p2" class="nav-item">
@@ -102,7 +142,9 @@
                                 />
                                 <path d="M0 0h24v24H0z" fill="none" />
                             </svg>
-                            <span>Film</span>
+                            <div>
+                                <span>Film</span>
+                            </div>
                         </a>
                     </div>
                     <div id="to-p3" class="nav-item">
@@ -112,7 +154,9 @@
                                 <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"
                                 />
                             </svg>
-                            <span>Cloud</span>
+                            <div>
+                                <span>Cloud</span>
+                            </div>
                         </a>
                     </div>
                     <div id="to-p4" class="nav-item">
@@ -121,7 +165,9 @@
                                 <path d="M0 0h24v24H0z" fill="none" />
                                 <path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z" />
                             </svg>
-                            <span>Talk</span>
+                            <div>
+                                <span>Talk</span>
+                            </div>
                         </a>
                     </div>
                     <div id="to-p5" class="nav-item">
@@ -131,7 +177,9 @@
                                 />
                                 <path d="M0 0h24v24H0z" fill="none" />
                             </svg>
-                            <span>Chat</span>
+                            <div>
+                                <span>Chat</span>
+                            </div>
                         </a>
                     </div>
                     <div id="to-p6" class="nav-item">
@@ -141,7 +189,9 @@
                                 <path d="M9.4 10.5l4.77-8.26C13.47 2.09 12.75 2 12 2c-2.4 0-4.6.85-6.32 2.25l3.66 6.35.06-.1zM21.54 9c-.92-2.92-3.15-5.26-6-6.34L11.88 9h9.66zm.26 1h-7.49l.29.5 4.76 8.25C21 16.97 22 14.61 22 12c0-.69-.07-1.35-.2-2zM8.54 12l-3.9-6.75C3.01 7.03 2 9.39 2 12c0 .69.07 1.35.2 2h7.49l-1.15-2zm-6.08 3c.92 2.92 3.15 5.26 6 6.34L12.12 15H2.46zm11.27 0l-3.9 6.76c.7.15 1.42.24 2.17.24 2.4 0 4.6-.85 6.32-2.25l-3.66-6.35-.93 1.6z"
                                 />
                             </svg>
-                            <span>Photo</span>
+                            <div>
+                                <span>Photo</span>
+                            </div>
                         </a>
                     </div>
                 </div>
