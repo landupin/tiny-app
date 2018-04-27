@@ -1,4 +1,5 @@
 function getAnimation(key) {
+    var outClass = "";
     switch (key) {
         case 1:
             outClass = 'pt-page-moveToLeft';

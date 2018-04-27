@@ -1,154 +1,166 @@
 var isAnimating = false,
-    showMenu = true;
+    isTouchDown = false,
+    currentClass = "page-current",
+    qCurrentClass = ".page-current",
+    onPageClass = "page-onscreen",
+    qOnPageClass = ".page-onscreen",
+    animEndEventName = "animationend";
 
-document.querySelector('[aria-label="menu"').addEventListener("click", function (ev) {
+document.querySelector('[aria-label="menu"]').addEventListener("click", function (ev) {
     if (isAnimating === true) {
         return false;
     }
 
     isAnimating = true;
 
-
     var animEndEventName = "animationend",
-        $module = document.querySelector("nav");
-    //inClass = ["pt-page-moveFromBottom"];
+        $nav = document.querySelector("nav"),
+        isMenuUp = $nav.classList.contains(currentClass),
+        moveClass = isMenuUp ? getAnimation(12)[0] : getAnimation(11)[1];
 
-    showMenu = ($module.getAttribute("aria-hidden") === "true");
-    var inClass = showMenu ? getAnimation(3)[1] : getAnimation(4)[0];
-
-
-    if (showMenu) {
-        $module.setAttribute("aria-hidden", "false");
-        $module.style.visibility = "visible";
+    function handleButtonClose(ev) {
+        document.querySelector('[aria-label="menu"]').click();
     }
 
-    inClass.forEach(Class => {
-        $module.classList.add(Class);
-    });
+    if (isMenuUp) {
+        document.querySelector("button.button-close").removeEventListener("click", handleButtonClose);
+        animateMenu($nav, true, document.querySelector(qOnPageClass));
+    } else {
+        animateMenu(document.querySelector(qCurrentClass), false, $nav);
+        document.querySelector("button.button-close").addEventListener("click", handleButtonClose);
+    }
 
-    $module.addEventListener(animEndEventName, function () {
-        $module.removeEventListener(animEndEventName, this);
-        //onEndAnimation($nextPage, inClass, showMenu);
-        if (!showMenu) {
-            $module.setAttribute("aria-hidden", "true");
-            $module.classList.remove("page-current");
+    function animateMenu($wasCurrent, removeMenu, $becomesCurrent) {
+        //unmake wasCurrent currentPage
+        $wasCurrent.classList.remove(currentClass);
+        if (!removeMenu) {
+            //put menu on screen
+            $nav.classList.add(onPageClass);
         }
-
-        resetPage($module, inClass);
-        isAnimating = false;
-    });
-
-    function resetPage($inpage, inClass) {
-        $inpage.style.visibility = "";
-        inClass.forEach(Class => {
-            $inpage.classList.remove(Class);
+        //add animation classes
+        moveClass.forEach(Class => {
+            $nav.classList.add(Class);
         });
+        //at the end of animation
+        $nav.addEventListener(animEndEventName, function handleEndAnimation() {
+            //remove this listener
+            $nav.removeEventListener(animEndEventName, handleEndAnimation);
+            if (removeMenu) {
+                //remove menu from screen
+                $nav.classList.remove(onPageClass);
+            }
+            //remove animation classes
+            moveClass.forEach(Class => {
+                $nav.classList.remove(Class);
+            });
+            //set nav as currentPage
+            $becomesCurrent.classList.add(currentClass);
+            isAnimating = false;
+        });
+    }
+});
 
-        if (showMenu && !$inpage.classList.contains("page-current")) {
-            $inpage.classList.add("page-current")
-        }
+document.addEventListener("keydown", function (ev) {
+    if (ev.key === " ") {
+        document.querySelector('[aria-label="menu"]').click();
+    }
+
+    switch (ev.key) {
+        case "Enter":
+        case "ArrowDown":
+        case "ArrowRight":
+            document.querySelector('[aria-label="next"]').click();
+            break;
+        case "ArrowUp":
+        case "ArrowLeft":
+            document.querySelector('[aria-label="previous"]').click();
+            break;
+        case " ":
+            document.querySelector('[aria-label="menu"]').click();
+            break;
     }
 });
 
 document.querySelector('[aria-label="next"]').addEventListener("click", function (ev) {
-    animate("next")
+    changePage(true);
 });
 
 document.querySelector('[aria-label="previous"]').addEventListener("click", function (ev) {
-    animate("prev")
+    changePage(false);
 });
 
-document.addEventListener("keydown", function (ev) {
-    switch (ev.key) {
-        case "ArrowUp":
-        case "ArrowLeft":
-            animate("previous");
-            break;
-
-        case " ":
-            document.querySelector('[aria-label="menu"]').click();
-            break;
-        case "ArrowDown":
-        case "ArrowRight":
-            //right Arrow => next
-            animate("next");
-    }
-});
-
-function animate(to, animationKey) {
-    if (isAnimating) {
+function changePage(toNext) {
+    // abort if already animating or menu is open
+    if (isAnimating || document.querySelector(qCurrentClass) === document.querySelector("nav")) {
         return false;
     }
 
+    //block other animations
     isAnimating = true;
 
-    var animEndEventName = "animationend",
+    var $currentPage = document.querySelector(qCurrentClass),
         $pages = document.querySelectorAll("article.page"),
-        $currPage = document.querySelector(".page-current");
-
-    if (to === "next") {
-        $nextPage = ($currPage !== $pages[$pages.length - 1]) ? $currPage.nextElementSibling : $pages[0];
-    } else {
-        $nextPage = ($currPage !== $pages[0]) ? $currPage.previousElementSibling : $pages[$pages.length - 1];
-    }
-
-    if (animationKey === undefined) {
-        animationKey = getRandomInt(67) + 1;
-    }
-
-    $nextPage.classList.add("page-current");
-
-    var outClass = getAnimation(animationKey)[0],
+        $upPage = undefined,
+        animationKey = getRandomInt(67) + 1,
+        outClass = getAnimation(animationKey)[0],
         inClass = getAnimation(animationKey)[1];
 
-    /***********************/
-
-    //$currPage.classList.add(outClass);
-    outClass.forEach(Class => {
-        $currPage.classList.add(Class);
-    });
-
-    $currPage.addEventListener(animEndEventName, function () {
-        $currPage.removeEventListener(animEndEventName, this);
-        endCurrPage = true;
-        onEndAnimation($currPage, $nextPage, outClass, inClass);
-    });
-
-    //$nextPage.classList.add(inClass);
-    inClass.forEach(Class => {
-        $nextPage.classList.add(Class);
-    });
-    $nextPage.addEventListener(animEndEventName, function () {
-        $nextPage.removeEventListener(animEndEventName, this);
-        endNextPage = true;
-        onEndAnimation($currPage, $nextPage, outClass, inClass);
-    });
-}
-
-function onEndAnimation($outpage, $inpage, outClass, inClass) {
-    endCurrPage = false;
-    endNextPage = false;
-    resetPage($outpage, outClass, $inpage, inClass);
-    isAnimating = false;
-}
-
-function resetPage($outpage, outClass, $inpage, inClass) {
-    $outpage.classList.remove("page-current");
-
-    //$outpage.classList.remove(outClass);
-    outClass.forEach(Class => {
-        $outpage.classList.remove(Class);
-    });
-    //$inpage.classList.remove(inClass);
-    inClass.forEach(Class => {
-        $inpage.classList.remove(Class);
-    });
-
-    if (!$inpage.classList.contains("page-current")) {
-        $inpage.classList.add("page-current")
+    //get upPage
+    if (toNext) {
+        $upPage = ($currentPage === $pages[$pages.length - 1]) ? $pages[0] : $currentPage.nextElementSibling;
+    } else {
+        $upPage = ($currentPage === $pages[0]) ? $pages[$pages.length - 1] : $currentPage.previousElementSibling;
     }
+
+    //there is no current page
+    $currentPage.classList.remove(currentClass);
+    //both pages are onscreen for animation
+    $upPage.classList.add(onPageClass);
+
+    //add animation classes
+    outClass.forEach(Class => {
+        $currentPage.classList.add(Class);
+    });
+    $currentPage.addEventListener(animEndEventName, function handleEndAnimation() {
+        //remove this eventListener
+        $currentPage.removeEventListener(animEndEventName, handleEndAnimation);
+        //remove animation classes
+        outClass.forEach(Class => {
+            $currentPage.classList.remove(Class);
+        });
+        //remove page from screen
+        $currentPage.classList.remove(onPageClass);
+        // free animating
+        isAnimating = false;
+    })
+
+    inClass.forEach(Class => {
+        $upPage.classList.add(Class);
+    });
+    $upPage.addEventListener(animEndEventName, function handleEndAnimation() {
+        //remove this eventListener
+        $upPage.removeEventListener(animEndEventName, handleEndAnimation);
+        //remove animation classes
+        inClass.forEach(Class => {
+            $upPage.classList.remove(Class);
+        });
+        //set page as current page
+        $upPage.classList.add(currentClass);
+        // free animating
+        isAnimating = false;
+    })
 }
 
+//helper function
 function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
 }
+
+
+/**** TEST */
+document.querySelectorAll("article.page").forEach(element => {
+    element.addEventListener("touchstart", function handler(ev) {
+        isTouchDown = true;
+        document.querySelector('[aria-label="next"]').click();
+    });
+});

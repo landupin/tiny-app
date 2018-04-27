@@ -39,7 +39,7 @@ body {
     transform-style: preserve-3d;
 }
 
-.page-current {
+.page-onscreen {
     visibility: visible;
     z-index: 1;
 }
@@ -85,34 +85,6 @@ button::-moz-focus-inner {
     margin-left: auto;
     margin-right: auto;
 }
-/*
-#p1 {
-    background-color: coral
-}
-
-#p2 {
-    background-color: lightblue
-}
-
-#p3 {
-    background-color: indianred
-}
-
-#p4 {
-    background-color: lightskyblue
-}
-
-#p5 {
-    background-color: mediumorchid
-}
-
-#p6 {
-    background-color: gold;
-}
-*/
-[aria-hidden="true"] {
-    visibility: hidden;
-}
 
 nav.page {
     background-color: var(--main-primary-light);
@@ -121,6 +93,27 @@ nav.page {
     font-size: inherit;
     padding: 2em 2rem 4rem 2rem;
 }
+
+
+nav.page-current{
+    overflow-y: hidden;
+}
+
+/* CLOSE BUTTON */
+button.button-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 4rem;
+    width: 4rem;
+    color: var(--main-button-light-on-light-color);
+}
+
+button.button-close svg {
+    height: initial;
+    width: initial;
+}
+/* END CLOSE BUTTON */
 
 .nav-wrapper {
     width: 100%;
@@ -174,11 +167,20 @@ nav.page {
     color: var(--main-button-light-on-light-color);    
 }
 
-.nav-item > a > span {
-    bottom: 1rem;
+.nav-item > a > div {
+    bottom: 2.75rem;
+    /*width: -moz-fit-content;*/
+    /* width: -webkit-fit-content; */
+    /*height: -moz-fit-content;*/
+    /*height:;*/
+    color: var(--main-text-primary-light-on-light);
+}
+
+.nav-item > a > div > span {
     width: -moz-fit-content;
     width: -webkit-fit-content;
-    color: var(--main-text-primary-light-on-light);
+    height: -moz-fit-content;
+    height: -webkit-fit-content;
 }
 
 nav svg {
@@ -208,4 +210,35 @@ nav svg {
 
 #to-p6 {
     grid-area: six;
+}
+
+
+/* background for slides*/
+article.page {
+    color: whitesmoke;
+    font-size: 4em;
+
+    padding-bottom: 4rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#p1 {
+    background-color: coral;
+}
+#p2 {
+    background-color: cadetblue;
+}
+#p3 {
+    background-color: lightpink;
+}
+#p4 {
+    background-color: lightseagreen;
+}
+#p5 {
+    background-color: rgba(235, 235, 15, 0.651);
+}
+#p6 {
+    background-color: peachpuff;
 }
