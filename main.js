@@ -169,5 +169,5 @@ document.querySelectorAll("article.page").forEach(element => {
     element.addEventListener("touchstart", function handler(ev) {
         isTouchDown = true;
         document.querySelector('[aria-label="next"]').click();
-    });
+    }, false);
 });
