@@ -6,6 +6,10 @@ var isAnimating = false,
     qOnPageClass = ".page-onscreen",
     animEndEventName = "animationend";
 
+function handleManualMenuClose(ev) {
+    document.querySelector('[aria-label="menu"]').click();
+}
+
 document.querySelector('[aria-label="menu"]').addEventListener("click", function (ev) {
     if (isAnimating === true) {
         return false;
@@ -15,27 +19,30 @@ document.querySelector('[aria-label="menu"]').addEventListener("click", function
 
     var animEndEventName = "animationend",
         $nav = document.querySelector("nav"),
+        $blur = document.querySelector("div.blur"),
         isMenuUp = $nav.classList.contains(currentClass),
         moveClass = isMenuUp ? getAnimation(12)[0] : getAnimation(11)[1];
 
-    function handleButtonClose(ev) {
-        document.querySelector('[aria-label="menu"]').click();
-    }
-
     if (isMenuUp) {
-        document.querySelector("button.button-close").removeEventListener("click", handleButtonClose);
-        animateMenu($nav, true, document.querySelector(qOnPageClass));
+        $blur.removeEventListener("click", handleManualMenuClose);
+        document.querySelector("button.button-close").removeEventListener("click", handleManualMenuClose);
+        animateMenu($nav, true, document.querySelector(qOnPageClass), $blur);
     } else {
-        animateMenu(document.querySelector(qCurrentClass), false, $nav);
-        document.querySelector("button.button-close").addEventListener("click", handleButtonClose);
+        animateMenu(document.querySelector(qCurrentClass), false, $nav, $blur);
+        document.querySelector("button.button-close").addEventListener("click", handleManualMenuClose);
+        $blur.addEventListener("click", handleManualMenuClose);
+
     }
 
-    function animateMenu($wasCurrent, removeMenu, $becomesCurrent) {
+    function animateMenu($wasCurrent, removeMenu, $becomesCurrent, $blur) {
         //unmake wasCurrent currentPage
         $wasCurrent.classList.remove(currentClass);
         if (!removeMenu) {
             //put menu on screen
             $nav.classList.add(onPageClass);
+            $blur.classList.add(onPageClass);
+        } else {
+            $blur.classList.remove(onPageClass);
         }
         //add animation classes
         moveClass.forEach(Class => {

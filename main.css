@@ -112,15 +112,54 @@ div[role="menu"] button {
 /* NAVIGATION PAGE */
 nav.page {
     background-color: var(--main-primary-light);
-    z-index: 2;
+    z-index: 3;
 
     font-size: inherit;
     padding: 2em 2rem 4rem 2rem;
+
+    height: 75%;
+    top: auto;
+    bottom: 0;
+
+    transition: box-shadow 700ms ease-in;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
 }
 
+@media (min-width: 1300px) {
+    nav.page {
+        height: 100%;
+        box-shadow: unset;
+        transition: unset;
+    }
+
+    nav.page-onscreen {
+        box-shadow: unset;    
+    }
+}
+
+nav.page-onscreen {
+    box-shadow: 0 0 1rem 1rem rgba(0, 0, 0, .4)    
+}
 
 nav.page-current{
     overflow-y: hidden;
+}
+
+div.blur {
+    z-index: 2;
+    visibility: hidden;
+    position: fixed;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    opacity: 0;
+
+    transition: all 700ms ease-in;
+}
+div.blur.page-onscreen{
+    opacity: .3;
+    visibility: visible;    
 }
 
 /* CLOSE BUTTON */
