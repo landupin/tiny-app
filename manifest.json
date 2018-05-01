@@ -1,0 +1,12 @@
+{
+    "name": "tiny-app",
+    "short_name": "tiny-app",
+    "lang": "en-US",
+    "start_url": ".",
+    "display": "standalone",
+    "theme_color": "#194171",
+    "background_color": "#fff",
+    "description": "small app with slides and a menu using css animations",
+    "related_applications": false
+  }
+  
